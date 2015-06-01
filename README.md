@@ -1,5 +1,5 @@
 # Firebase4Delphi 
-A Delphi library to consume FIREBASE REST API (see more here https://www.firebase.com/)
+A Delphi library to consume FIREBASE REST API (see more here https://www.firebase.com/). This project use System.Net library, so is compatible from DelphiXE8.
 
 # Apache 2.0 License 
 Copyright 2015 Daniele Spinetti
