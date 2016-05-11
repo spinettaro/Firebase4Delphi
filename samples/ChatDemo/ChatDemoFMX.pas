@@ -4,11 +4,15 @@ interface
 
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes,
-  System.Variants,
-  FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.TabControl,
+  System.Variants, FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms,
+  FMX.Dialogs, FMX.TabControl,
   FMX.StdCtrls, FMX.Gestures, FMX.ListView.Types, FMX.ListView,
   FMX.Controls.Presentation, FMX.Edit, System.Actions, FMX.ActnList,
-  FMX.Layouts, ChatFacade;
+  FMX.Layouts,
+{$IF CompilerVersion >= 30} // For Seattle and major
+  FMX.ListView.Appearances,
+{$ENDIF}
+  ChatFacade;
 
 type
   TTabbedForm = class(TForm)

@@ -35,17 +35,24 @@ object TabbedForm: TTabbedForm
     TabIndex = 0
     TabOrder = 1
     TabPosition = PlatformDefault
+    Sizes = (
+      384s
+      470s
+      384s
+      470s)
     object TabItem1: TTabItem
       CustomIcon = <
         item
         end>
       IsSelected = True
-      Size.Width = 192.000000000000000000
+      Size.Width = 191.000000000000000000
       Size.Height = 49.000000000000000000
       Size.PlatformDefault = False
       StyleLookup = 'tabitemtoprated'
       TabOrder = 0
       Text = 'Settings'
+      ExplicitSize.cx = 192.000000000000000000
+      ExplicitSize.cy = 49.000000000000000000
       object GridPanelLayout1: TGridPanelLayout
         Align = Client
         Margins.Left = 10.000000000000000000
@@ -160,12 +167,14 @@ object TabbedForm: TTabbedForm
         item
         end>
       IsSelected = False
-      Size.Width = 190.000000000000000000
+      Size.Width = 191.000000000000000000
       Size.Height = 49.000000000000000000
       Size.PlatformDefault = False
       StyleLookup = 'tabitemcontacts'
       TabOrder = 0
       Text = 'Chat Main'
+      ExplicitSize.cx = 190.000000000000000000
+      ExplicitSize.cy = 49.000000000000000000
       object ListView1: TListView
         ItemAppearanceClassName = 'TListItemRightDetailAppearance'
         ItemEditAppearanceClassName = 'TListItemRightDetailDeleteAppearance'
