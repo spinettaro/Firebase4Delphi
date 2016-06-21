@@ -12,10 +12,10 @@ uses
 {$IF CompilerVersion >= 30} // For Seattle and major
   FMX.ListView.Appearances,
 {$ENDIF}
-  ChatFacade;
+  ChatFacade, FMX.ListView.Adapters.Base;
 
 type
-  TTabbedForm = class(TForm)
+  TMainForm = class(TForm)
     HeaderToolBar: TToolBar;
     ToolBarLabel: TLabel;
     TabControl1: TTabControl;
@@ -49,18 +49,18 @@ type
   end;
 
 var
-  TabbedForm: TTabbedForm;
+  MainForm: TMainForm;
 
 implementation
 
 {$R *.fmx}
 
-procedure TTabbedForm.actSendMessageExecute(Sender: TObject);
+procedure TMainForm.actSendMessageExecute(Sender: TObject);
 begin
   LFC.SendMessage(Edit3.Text);
 end;
 
-procedure TTabbedForm.actStartChatExecute(Sender: TObject);
+procedure TMainForm.actStartChatExecute(Sender: TObject);
 begin
   LFC := TFirebaseChatFacade.Create;
   LFC.SetBaseURI(Edit1.Text);
@@ -70,13 +70,13 @@ begin
   actChatMain.ExecuteTarget(Sender);
 end;
 
-procedure TTabbedForm.FormCreate(Sender: TObject);
+procedure TMainForm.FormCreate(Sender: TObject);
 begin
   { This defines the default active tab at runtime }
   TabControl1.ActiveTab := TabItem1;
 end;
 
-procedure TTabbedForm.OnNewMessage(AChatMsg: TChatMessage);
+procedure TMainForm.OnNewMessage(AChatMsg: TChatMessage);
 var
   Item: TListViewItem;
 begin

@@ -103,10 +103,12 @@ var
   I: Integer;
   Key: string;
   ChatMsg: TChatMessage;
+  JSONResp: TJSONValue;
 begin
-  Obj := TJSONObject.ParseJSONValue(AResp.ContentAsString) as TJSONObject;
-  if not Assigned(Obj) then
+  JSONResp := TJSONObject.ParseJSONValue(AResp.ContentAsString);
+  if (not Assigned(JSONResp)) or (not(JSONResp is TJSONObject)) then
     exit;
+  Obj := TJSONObject.ParseJSONValue(AResp.ContentAsString) as TJSONObject;
   try
     TMonitor.Enter(FMessages);
     try
