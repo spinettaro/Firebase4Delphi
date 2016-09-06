@@ -107,8 +107,12 @@ var
 begin
   JSONResp := TJSONObject.ParseJSONValue(AResp.ContentAsString);
   if (not Assigned(JSONResp)) or (not(JSONResp is TJSONObject)) then
+  begin
+    if Assigned(JSONResp) then
+      JSONResp.Free;
     exit;
-  Obj := TJSONObject.ParseJSONValue(AResp.ContentAsString) as TJSONObject;
+  end;
+  Obj := JSONResp as TJSONObject;
   try
     TMonitor.Enter(FMessages);
     try

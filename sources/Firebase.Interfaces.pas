@@ -35,13 +35,13 @@ type
     procedure SetTimeOut(const ASeconds: Integer);
     // It's a put
     function &Set(const AParams: array of string; AData: TJSONValue = nil;
-      AQueryParams: TDictionary<string, string> = nil): IFirebaseResponse;
+      AQueryParams: TDictionary<string, string> = nil; ADataOwner: boolean = true): IFirebaseResponse;
     // It's a post
     function Push(const AParams: array of string; AData: TJSONValue = nil;
-      AQueryParams: TDictionary<string, string> = nil): IFirebaseResponse;
+      AQueryParams: TDictionary<string, string> = nil; ADataOwner: boolean = true): IFirebaseResponse;
     // PATCH - Updating Data
     function Update(const AParams: array of string; AData: TJSONValue = nil;
-      AQueryParams: TDictionary<string, string> = nil): IFirebaseResponse;
+      AQueryParams: TDictionary<string, string> = nil; ADataOwner: boolean = true): IFirebaseResponse;
     function Get(const AParams: array of string;
       AQueryParams: TDictionary<string, string> = nil): IFirebaseResponse;
     function Delete(const AParams: array of string;
