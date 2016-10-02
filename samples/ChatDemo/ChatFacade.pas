@@ -171,7 +171,7 @@ begin
       FFC := TFirebaseClient.Create;
       FFC.SetBaseURI(FBaseURI);
       ToSend := TChatParser.GetJSON(FUsername, AMessage);
-      FFC.Push(['.json'], ToSend);
+      FFC.Post(['.json'], ToSend);
     end);
 end;
 

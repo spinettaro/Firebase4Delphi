@@ -22,7 +22,7 @@ uses System.JSON, System.SysUtils, System.Generics.Collections;
 
 type
 
-  TFirebaseCommand = (fcSet, fcPush, fcUpdate, fcGet, fcRemove);
+  TFirebaseCommand = (fcPut, fcPatch, fcPost, fcGet, fcRemove);
 
   IFirebaseResponse = interface(IInterface)
     ['{28CE1C37-DE9E-47C2-8764-2FB073B93FB8}']
@@ -34,14 +34,17 @@ type
     procedure SetBaseURI(const AbaseURI: string);
     procedure SetTimeOut(const ASeconds: Integer);
     // It's a put
-    function &Set(const AParams: array of string; AData: TJSONValue = nil;
-      AQueryParams: TDictionary<string, string> = nil; ADataOwner: boolean = true): IFirebaseResponse;
+    function Put(const AParams: array of string; AData: TJSONValue = nil;
+      AQueryParams: TDictionary<string, string> = nil;
+      ADataOwner: boolean = true): IFirebaseResponse;
     // It's a post
-    function Push(const AParams: array of string; AData: TJSONValue = nil;
-      AQueryParams: TDictionary<string, string> = nil; ADataOwner: boolean = true): IFirebaseResponse;
+    function Post(const AParams: array of string; AData: TJSONValue = nil;
+      AQueryParams: TDictionary<string, string> = nil;
+      ADataOwner: boolean = true): IFirebaseResponse;
     // PATCH - Updating Data
-    function Update(const AParams: array of string; AData: TJSONValue = nil;
-      AQueryParams: TDictionary<string, string> = nil; ADataOwner: boolean = true): IFirebaseResponse;
+    function Patch(const AParams: array of string; AData: TJSONValue = nil;
+      AQueryParams: TDictionary<string, string> = nil;
+      ADataOwner: boolean = true): IFirebaseResponse;
     function Get(const AParams: array of string;
       AQueryParams: TDictionary<string, string> = nil): IFirebaseResponse;
     function Delete(const AParams: array of string;

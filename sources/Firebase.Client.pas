@@ -37,12 +37,12 @@ type
   public
     procedure SetBaseURI(const AbaseURI: string);
     procedure SetTimeOut(const ASeconds: integer);
-    function &Set(const AParams: array of string; AData: TJSONValue = nil;
+    function Put(const AParams: array of string; AData: TJSONValue = nil;
       AQueryParams: TDictionary<string, string> = nil; ADataOwner: boolean = true): IFirebaseResponse;
-    function Push(const AParams: array of string; AData: TJSONValue = nil;
+    function Post(const AParams: array of string; AData: TJSONValue = nil;
       AQueryParams: TDictionary<string, string> = nil; ADataOwner: boolean = true): IFirebaseResponse;
     // PATCH - Updating Data
-    function Update(const AParams: array of string; AData: TJSONValue = nil;
+    function Patch(const AParams: array of string; AData: TJSONValue = nil;
       AQueryParams: TDictionary<string, string> = nil; ADataOwner: boolean = true): IFirebaseResponse;
     function Get(const AParams: array of string;
       AQueryParams: TDictionary<string, string> = nil): IFirebaseResponse;
@@ -106,18 +106,18 @@ begin
   Result := SendData(AParams, TFirebaseCommand.fcGet, nil, AQueryParams);
 end;
 
-function TFirebaseClient.Push(const AParams: array of string;
+function TFirebaseClient.Post(const AParams: array of string;
   AData: TJSONValue = nil; AQueryParams: TDictionary<string, string> = nil; ADataOwner: boolean = true)
   : IFirebaseResponse;
 begin
-  Result := SendData(AParams, TFirebaseCommand.fcPush, AData, AQueryParams, ADataOwner);
+  Result := SendData(AParams, TFirebaseCommand.fcPost, AData, AQueryParams, ADataOwner);
 end;
 
-function TFirebaseClient.&Set(const AParams: array of string;
+function TFirebaseClient.Put(const AParams: array of string;
   AData: TJSONValue = nil; AQueryParams: TDictionary<string, string> = nil; ADataOwner: boolean = true)
   : IFirebaseResponse;
 begin
-  Result := SendData(AParams, TFirebaseCommand.fcSet, AData, AQueryParams, ADataOwner);
+  Result := SendData(AParams, TFirebaseCommand.fcPut, AData, AQueryParams, ADataOwner);
 end;
 
 function TFirebaseClient.SendData(const AResourceParams: array of string;
@@ -140,11 +140,11 @@ begin
         LURL := BaseUri + EncodeResourceParams(AResourceParams) +
           EncodeQueryParams(AQueryParams);
         case ACommand of
-          fcSet:
+          fcPut:
             LResp := LClient.Put(LURL, LSource);
-          fcPush:
+          fcPost:
             LResp := LClient.Post(LURL, LSource);
-          fcUpdate:
+          fcPatch:
             LResp := LClient.Patch(LURL, LSource);
           fcGet:
             LResp := LClient.Get(LURL);
@@ -178,11 +178,11 @@ begin
   FTimeOut := ASeconds;
 end;
 
-function TFirebaseClient.Update(const AParams: array of string;
+function TFirebaseClient.Patch(const AParams: array of string;
   AData: TJSONValue = nil; AQueryParams: TDictionary<string, string> = nil; ADataOwner: boolean = true)
   : IFirebaseResponse;
 begin
-  Result := SendData(AParams, TFirebaseCommand.fcUpdate, AData, AQueryParams, ADataOwner);
+  Result := SendData(AParams, TFirebaseCommand.fcPatch, AData, AQueryParams, ADataOwner);
 end;
 
 { TFirebaseResponse }
