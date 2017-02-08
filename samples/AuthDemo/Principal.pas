@@ -22,9 +22,12 @@ type
     edtNode: TEdit;
     Label6: TLabel;
     edtKey: TEdit;
-    procedure FormCreate(Sender: TObject);
+    Button3: TButton;
+    Label7: TLabel;
+    edtDomain: TEdit;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -42,7 +45,9 @@ uses
   Firebase.Database,
   System.JSON,
   System.Net.HttpClient,
-  System.Generics.Collections;
+  System.Generics.Collections,
+  System.JSON.Types,
+  System.JSON.Writers;
 
 {$R *.dfm}
 
@@ -52,8 +57,6 @@ var
   AResponse: IFirebaseResponse;
   JSONResp: TJSONValue;
   Obj: TJSONObject;
-  I: Integer;
-  Key: string;
 begin
   Auth := TFirebaseAuth.Create;
   try
@@ -84,7 +87,7 @@ var
   JSONResp: TJSONValue;
 begin
   ADatabase := TFirebaseDatabase.Create;
-  ADatabase.SetBaseURI('https://cloudclass-156620.firebaseio.com');
+  ADatabase.SetBaseURI(edtDomain.Text);
   ADatabase.SetToken(memoToken.Text);
   memoResp.Lines.Clear;
   AParams := TDictionary<string, string>.Create;
@@ -108,12 +111,92 @@ begin
   end;
 end;
 
-procedure TForm1.FormCreate(Sender: TObject);
+procedure TForm1.Button3Click(Sender: TObject);
+var
+  ADatabase: TFirebaseDatabase;
+  AResponse: IFirebaseResponse;
+  JSONReq: TJSONObject;
+  JSONResp: TJSONValue;
+  Writer: TJsonTextWriter;
+  StringWriter: TStringWriter;
 begin
 
-  //edtEmail.Text := '';
-  //edtPassword.Text := '';
-  memoResp.Lines.Clear;
+  StringWriter := TStringWriter.Create();
+  Writer := TJsonTextWriter.Create(StringWriter);
+  Writer.Formatting := TJsonFormatting.None;
+
+  // Start
+  Writer.WriteStartObject;
+
+  // Guid
+  Writer.WritePropertyName('razao');
+  Writer.WriteValue('softclass software ltda');
+
+  // Data
+  Writer.WritePropertyName('data');
+  Writer.WriteValue('08/02/2017');
+
+  // Hora
+  Writer.WritePropertyName('hora');
+  Writer.WriteValue('11:03');
+
+    // Produtos
+    Writer.WritePropertyName('Produtos');
+    Writer.WriteStartArray;
+
+      // Produto 01
+      Writer.WriteStartObject;
+      Writer.WritePropertyName('codigo');
+      Writer.WriteValue('A502C9DA');
+      Writer.WritePropertyName('descricao');
+      Writer.WriteValue('AGUA MINERAL');
+      Writer.WriteEndObject;
+
+      // Produto 02
+      Writer.WriteStartObject;
+      Writer.WritePropertyName('codigo');
+      Writer.WriteValue('A502C9DA');
+      Writer.WritePropertyName('descricao');
+      Writer.WriteValue('AGUA MINERAL');
+      Writer.WriteEndObject;
+
+    Writer.WriteEndArray;
+
+    // Pagamentos
+    Writer.WritePropertyName('Pagamentos');
+    Writer.WriteStartArray;
+
+      // Dinheiro
+      Writer.WriteStartObject;
+      Writer.WritePropertyName('dinheiro');
+      Writer.WriteValue('100.00');
+      Writer.WriteEndObject;
+
+    Writer.WriteEndArray;
+
+  // End
+  Writer.WriteEndObject;
+
+  JSONReq := TJSONObject.ParseJSONValue(StringWriter.ToString) as TJSONObject;
+
+  ADatabase := TFirebaseDatabase.Create;
+  ADatabase.SetBaseURI(edtDomain.Text);
+  ADatabase.SetToken(memoToken.Text);
+  try
+    AResponse := ADatabase.Post([edtNode.Text+'.json'], JSONReq);
+    JSONResp := TJSONObject.ParseJSONValue(AResponse.ContentAsString);
+    if (not Assigned(JSONResp)) or (not(JSONResp is TJSONObject)) then
+    begin
+      if Assigned(JSONResp) then
+      begin
+        JSONResp.Free;
+      end;
+      Exit;
+    end;
+    memoResp.Text := JSONResp.ToString;
+  finally
+    ADatabase.Free;
+  end;
 
 end;
 

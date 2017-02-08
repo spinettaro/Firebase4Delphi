@@ -81,7 +81,11 @@ begin
       if AData <> nil then
         LSource := TStringStream.Create(AData.ToJSON);
         if (Token <> '') then
+        begin
+          if AQueryParams = nil then
+              AQueryParams := TDictionary<string, string>.Create;
           AQueryParams.Add('auth',Token);
+        end;
       try
         LURL := BaseURI + EncodeResourceParams(AResourceParams) + EncodeQueryParams(AQueryParams);
         case ACommand of
