@@ -9,10 +9,11 @@ uses
   FMX.StdCtrls, FMX.Gestures, FMX.ListView.Types, FMX.ListView,
   FMX.Controls.Presentation, FMX.Edit, System.Actions, FMX.ActnList,
   FMX.Layouts,
-{$IF CompilerVersion >= 30} // For Seattle and major
-  FMX.ListView.Appearances,
-{$ENDIF}
-  ChatFacade, FMX.ListView.Adapters.Base;
+//  {$IF CompilerVersion >= 30} // For Seattle and major
+//  FMX.ListView.Adapters.Base,
+//  FMX.ListView.Appearances,
+//  {$ENDIF}
+  ChatFacade, FMX.ListView.Appearances, FMX.ListView.Adapters.Base;
 
 type
   TMainForm = class(TForm)

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2017/02/06 22:19:17.000.409,=C:\Users\dener\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2017/02/06 22:19:46.000.501,D:\PROJETOS\Firebase4Delphi\samples\AuthDemo\Principal.dfm=C:\Users\dener\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2017/02/06 22:19:46.000.501,D:\PROJETOS\Firebase4Delphi\samples\AuthDemo\Principal.pas=C:\Users\dener\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2017/02/06 22:20:08.000.735,D:\PROJETOS\Firebase4Delphi\samples\AuthDemo\AuthDemo.dproj=C:\Users\dener\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2017/02/06 22:20:56.000.077,=D:\PROJETOS\Firebase4Delphi\sources\Firebase.Database.pas</Transaction>
+    <Transaction>2017/02/06 22:20:56.000.063,=D:\PROJETOS\Firebase4Delphi\sources\Firebase.Auth.pas</Transaction>
+    <Transaction>2017/02/06 22:20:56.000.105,=D:\PROJETOS\Firebase4Delphi\sources\Firebase.Response.pas</Transaction>
+    <Transaction>2017/02/06 22:20:56.000.091,=D:\PROJETOS\Firebase4Delphi\sources\Firebase.Interfaces.pas</Transaction>
+    <Transaction>2017/02/07 09:30:53.000.322,=D:\PROJETOS\Firebase4Delphi\samples\AuthDemo\Unit1.pas</Transaction>
+    <Transaction>2017/02/07 09:31:34.000.042,D:\PROJETOS\Firebase4Delphi\samples\AuthDemo\Unit1.pas=D:\PROJETOS\Firebase4Delphi\sources\Firebase.Request.pas</Transaction>
+  </Transactions>
+</BorlandProject>

@@ -18,7 +18,10 @@ unit Firebase.Interfaces;
 
 interface
 
-uses System.JSON, System.SysUtils, System.Generics.Collections;
+uses
+  System.JSON,
+  System.SysUtils,
+  System.Generics.Collections;
 
 type
 
@@ -29,26 +32,39 @@ type
     function ContentAsString(const AEncoding: TEncoding = nil): string;
   end;
 
-  IFirebaseClient = interface(IInterface)
+  IFirebaseRequest = interface(IInterface)
+    ['{3B265C49-747A-4EFF-AC76-138A39F1C34B}']
+    procedure SetBaseURI(const ABaseURI: string);
+    procedure SetToken(const AToken: string);
+    function SendData(const AResourceParams: array of string;
+      const ACommand: TFirebaseCommand; AData: TJSONValue = nil;
+      AQueryParams: TDictionary < string, string >= nil;
+      ADataOwner: boolean = true): IFirebaseResponse;
+  end;
+
+  IFirebaseDatabase = interface(IInterface)
     ['{43135DC9-C04F-42A3-AB5B-3E15AE207322}']
-    procedure SetBaseURI(const AbaseURI: string);
-    procedure SetTimeOut(const ASeconds: Integer);
-    // It's a put
+    procedure SetBaseURI(const ABaseURI: string);
+    procedure SetToken(const AToken: string);
+    function Get(const AParams: array of string;
+      AQueryParams: TDictionary<string, string> = nil): IFirebaseResponse;
     function Put(const AParams: array of string; AData: TJSONValue = nil;
       AQueryParams: TDictionary<string, string> = nil;
       ADataOwner: boolean = true): IFirebaseResponse;
-    // It's a post
     function Post(const AParams: array of string; AData: TJSONValue = nil;
       AQueryParams: TDictionary<string, string> = nil;
       ADataOwner: boolean = true): IFirebaseResponse;
-    // PATCH - Updating Data
     function Patch(const AParams: array of string; AData: TJSONValue = nil;
       AQueryParams: TDictionary<string, string> = nil;
       ADataOwner: boolean = true): IFirebaseResponse;
-    function Get(const AParams: array of string;
-      AQueryParams: TDictionary<string, string> = nil): IFirebaseResponse;
     function Delete(const AParams: array of string;
       AQueryParams: TDictionary<string, string> = nil): IFirebaseResponse;
+  end;
+
+  IFirebaseAuth = interface(IInterface)
+    ['{74CEDE48-B2BD-4CB4-BD5F-34A60BEDF8C3}']
+    procedure SetApiKey(const AValue: string);
+    function SignInWithEmailAndPassword(AEmail: string; APassword: string): IFirebaseResponse;
   end;
 
 implementation
