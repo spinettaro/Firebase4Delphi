@@ -218,8 +218,8 @@ object MainForm: TMainForm
     end
   end
   object ActionList1: TActionList
-    Left = 32
-    Top = 344
+    Left = 176
+    Top = 312
     object actStartChat: TAction
       Text = 'Start Chat'
       OnExecute = actStartChatExecute

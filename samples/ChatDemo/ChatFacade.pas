@@ -2,8 +2,13 @@ unit ChatFacade;
 
 interface
 
-uses Firebase.Client, Firebase.Interfaces, System.SysUtils,
-  Generics.Collections, System.Threading, System.JSON;
+uses
+  Firebase.Interfaces,
+  Firebase.Database,
+  System.SysUtils,
+  Generics.Collections,
+  System.Threading,
+  System.JSON;
 
 type
 
@@ -165,10 +170,10 @@ begin
   TTask.Run(
     procedure
     var
-      FFC: IFirebaseClient;
+      FFC: IFirebaseDatabase;
       ToSend: TJSONObject;
     begin
-      FFC := TFirebaseClient.Create;
+      FFC := TFirebaseDatabase.Create;
       FFC.SetBaseURI(FBaseURI);
       ToSend := TChatParser.GetJSON(FUsername, AMessage);
       FFC.Post(['.json'], ToSend);
@@ -196,12 +201,12 @@ begin
   TTask.Run(
     procedure
     var
-      FFC: IFirebaseClient;
+      FFC: IFirebaseDatabase;
       Response: IFirebaseResponse;
       I: Integer;
       QueryParams: TDictionary<string, string>;
     begin
-      FFC := TFirebaseClient.Create;
+      FFC := TFirebaseDatabase.Create;
       FFC.SetBaseURI(FBaseURI);
       QueryParams := TDictionary<string, string>.Create;
       try
