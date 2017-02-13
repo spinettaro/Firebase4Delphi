@@ -40,6 +40,7 @@ type
       : TDictionary<string, string>): string;
     function EncodeToken(const AToken: string): string;
   public
+    constructor Create(const ABaseURI: string = ''; const AToken: string = '');
     procedure SetBaseURI(const ABaseURI: string);
     procedure SetToken(const AToken: string);
     function SendData(const AResourceParams: array of string;
@@ -114,6 +115,13 @@ begin
         AData.Free;
     end;
   end;
+end;
+
+constructor TFirebaseRequest.Create(const ABaseURI, AToken: string);
+begin
+  inherited Create;
+  FBaseURI := ABaseURI;
+  FToken := AToken;
 end;
 
 function TFirebaseRequest.EncodeQueryParams(AQueryParams

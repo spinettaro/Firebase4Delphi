@@ -41,11 +41,14 @@ type
     function Get(const AParams: array of string;
       AQueryParams: TDictionary<string, string> = nil): IFirebaseResponse;
     function Put(const AParams: array of string; AData: TJSONValue = nil;
-      AQueryParams: TDictionary<string, string> = nil; ADataOwner: boolean = true): IFirebaseResponse;
+      AQueryParams: TDictionary<string, string> = nil;
+      ADataOwner: boolean = true): IFirebaseResponse;
     function Post(const AParams: array of string; AData: TJSONValue = nil;
-      AQueryParams: TDictionary<string, string> = nil; ADataOwner: boolean = true): IFirebaseResponse;
+      AQueryParams: TDictionary<string, string> = nil;
+      ADataOwner: boolean = true): IFirebaseResponse;
     function Patch(const AParams: array of string; AData: TJSONValue = nil;
-      AQueryParams: TDictionary<string, string> = nil; ADataOwner: boolean = true): IFirebaseResponse;
+      AQueryParams: TDictionary<string, string> = nil;
+      ADataOwner: boolean = true): IFirebaseResponse;
     function Delete(const AParams: array of string;
       AQueryParams: TDictionary<string, string> = nil): IFirebaseResponse;
     property BaseURI: string read FBaseURI write SetBaseURI;
@@ -69,79 +72,54 @@ end;
 function TFirebaseDatabase.Get(const AParams: array of string;
   AQueryParams: TDictionary<string, string> = nil): IFirebaseResponse;
 var
-  ARequest: TFirebaseRequest;
+  ARequest: IFirebaseRequest;
 begin
-  ARequest := TFirebaseRequest.Create;
-  try
-    ARequest.SetBaseURI(BaseURI);
-    ARequest.SetToken(Token);
-    Result := ARequest.SendData(AParams, TFirebaseCommand.fcGet, nil, AQueryParams);
-  finally
-    ARequest.Free;
-  end;
+  ARequest := TFirebaseRequest.Create(BaseURI, Token);
+  Result := ARequest.SendData(AParams, TFirebaseCommand.fcGet, nil,
+    AQueryParams);
 end;
 
 function TFirebaseDatabase.Post(const AParams: array of string;
-  AData: TJSONValue = nil; AQueryParams: TDictionary<string, string> = nil; ADataOwner: boolean = true)
-  : IFirebaseResponse;
+  AData: TJSONValue = nil; AQueryParams: TDictionary<string, string> = nil;
+  ADataOwner: boolean = true): IFirebaseResponse;
 var
-  ARequest: TFirebaseRequest;
+  ARequest: IFirebaseRequest;
 begin
-  ARequest := TFirebaseRequest.Create;
-  try
-    ARequest.SetBaseURI(BaseURI);
-    ARequest.SetToken(Token);
-    Result := ARequest.SendData(AParams, TFirebaseCommand.fcPost, AData, AQueryParams, ADataOwner);
-  finally
-    ARequest.Free;
-  end;
+  ARequest := TFirebaseRequest.Create(BaseURI, Token);
+  Result := ARequest.SendData(AParams, TFirebaseCommand.fcPost, AData,
+    AQueryParams, ADataOwner);
 end;
 
 function TFirebaseDatabase.Put(const AParams: array of string;
-  AData: TJSONValue = nil; AQueryParams: TDictionary<string, string> = nil; ADataOwner: boolean = true)
-  : IFirebaseResponse;
+  AData: TJSONValue = nil; AQueryParams: TDictionary<string, string> = nil;
+  ADataOwner: boolean = true): IFirebaseResponse;
 var
-  ARequest: TFirebaseRequest;
+  ARequest: IFirebaseRequest;
 begin
-  ARequest := TFirebaseRequest.Create;
-  try
-    ARequest.SetBaseURI(BaseURI);
-    ARequest.SetToken(Token);
-    Result := ARequest.SendData(AParams, TFirebaseCommand.fcPut, AData, AQueryParams, ADataOwner);
-  finally
-    ARequest.Free;
-  end;
+  ARequest := TFirebaseRequest.Create(BaseURI, Token);
+  Result := ARequest.SendData(AParams, TFirebaseCommand.fcPut, AData,
+    AQueryParams, ADataOwner);
 end;
 
 function TFirebaseDatabase.Patch(const AParams: array of string;
-  AData: TJSONValue = nil; AQueryParams: TDictionary<string, string> = nil; ADataOwner: boolean = true)
-  : IFirebaseResponse;
+  AData: TJSONValue = nil; AQueryParams: TDictionary<string, string> = nil;
+  ADataOwner: boolean = true): IFirebaseResponse;
 var
-  ARequest: TFirebaseRequest;
+  ARequest: IFirebaseRequest;
 begin
-  ARequest := TFirebaseRequest.Create;
-  try
-    ARequest.SetBaseURI(BaseURI);
-    ARequest.SetToken(Token);
-    Result := ARequest.SendData(AParams, TFirebaseCommand.fcPatch, AData, AQueryParams, ADataOwner);
-  finally
-    ARequest.Free;
-  end;
+  ARequest := TFirebaseRequest.Create(BaseURI, Token);
+  Result := ARequest.SendData(AParams, TFirebaseCommand.fcPatch, AData,
+    AQueryParams, ADataOwner);
 end;
 
 function TFirebaseDatabase.Delete(const AParams: array of string;
   AQueryParams: TDictionary<string, string> = nil): IFirebaseResponse;
 var
-  ARequest: TFirebaseRequest;
+  ARequest: IFirebaseRequest;
 begin
-  ARequest := TFirebaseRequest.Create;
-  try
-    ARequest.SetBaseURI(BaseURI);
-    ARequest.SetToken(Token);
-    Result := ARequest.SendData(AParams, TFirebaseCommand.fcRemove, nil, AQueryParams);
-  finally
-    ARequest.Free;
-  end;
+  ARequest := TFirebaseRequest.Create(BaseURI, Token);
+  Result := ARequest.SendData(AParams, TFirebaseCommand.fcRemove, nil,
+    AQueryParams);
 end;
 
 end.
