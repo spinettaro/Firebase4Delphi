@@ -13,7 +13,7 @@
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
-  ********************************************************************************}
+  ******************************************************************************** }
 
 unit Firebase.Request;
 
@@ -36,7 +36,9 @@ type
     FBaseURI: string;
     FToken: string;
     function EncodeResourceParams(AResourceParams: array of string): string;
-    function EncodeQueryParams(AQueryParams: TDictionary<string, string>): string;
+    function EncodeQueryParams(AQueryParams
+      : TDictionary<string, string>): string;
+    function EncodeToken(const AToken: string): string;
   public
     procedure SetBaseURI(const ABaseURI: string);
     procedure SetToken(const AToken: string);
@@ -50,11 +52,14 @@ type
 
 implementation
 
+uses
+  System.NetConsts, System.NetEncoding, System.StrUtils;
+
 { TFirebaseRequest }
 
 procedure TFirebaseRequest.SetBaseURI(const ABaseURI: string);
 begin
-  FBaseUri := ABaseURI;
+  FBaseURI := ABaseURI;
 end;
 
 procedure TFirebaseRequest.SetToken(const AToken: string);
@@ -68,7 +73,6 @@ function TFirebaseRequest.SendData(const AResourceParams: array of string;
   : IFirebaseResponse;
 var
   LClient: THTTPClient;
-  LBearer: TNetHeader;
   LResp: IHTTPResponse;
   LURL: string;
   LSource: TStringStream;
@@ -80,14 +84,9 @@ begin
       LSource := nil;
       if AData <> nil then
         LSource := TStringStream.Create(AData.ToJSON);
-        if (Token <> '') then
-        begin
-          if AQueryParams = nil then
-              AQueryParams := TDictionary<string, string>.Create;
-          AQueryParams.Add('auth',Token);
-        end;
       try
-        LURL := BaseURI + EncodeResourceParams(AResourceParams) + EncodeQueryParams(AQueryParams);
+        LURL := BaseURI + EncodeResourceParams(AResourceParams) +
+          EncodeToken(Token) + EncodeQueryParams(AQueryParams);
         case ACommand of
           fcPut:
             LResp := LClient.Put(LURL, LSource);
@@ -124,13 +123,13 @@ var
 begin
   if (not Assigned(AQueryParams)) or not(AQueryParams.Count > 0) then
     exit('');
-  Result := '?';
+  Result := ifthen(Token.IsEmpty, '?', '');
   for Param in AQueryParams do
   begin
     if Result <> '?' then
       Result := Result + '&';
-    Result := Result + TURI.URLDecode(Param.Key) + '=' +
-      TURI.URLDecode(Param.Value)
+    Result := Result + TNetEncoding.URL.URLDecode(Param.Key) + '=' +
+      TNetEncoding.URL.URLDecode(Param.Value)
   end;
 end;
 
@@ -141,7 +140,15 @@ var
 begin
   Result := '';
   for i := low(AResourceParams) to high(AResourceParams) do
-    Result := Result + '/' + TURI.URLEncode(AResourceParams[i]);
+    Result := Result + '/' + TNetEncoding.URL.Encode(AResourceParams[i]);
+end;
+
+function TFirebaseRequest.EncodeToken(const AToken: string): string;
+begin
+  if Token.IsEmpty then
+    Result := ''
+  else
+    Result := '?auth=' + Token;
 end;
 
 end.
