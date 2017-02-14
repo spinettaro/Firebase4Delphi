@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{EF78DEFC-7302-4841-949F-1641CFB336A6}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="AuthDemo\AuthDemo.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="ChatDemo\Firebase4DelphiChatDemo.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="AuthDemo">
+        <MSBuild Projects="AuthDemo\AuthDemo.dproj"/>
+    </Target>
+    <Target Name="AuthDemo:Clean">
+        <MSBuild Projects="AuthDemo\AuthDemo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="AuthDemo:Make">
+        <MSBuild Projects="AuthDemo\AuthDemo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Firebase4DelphiChatDemo">
+        <MSBuild Projects="ChatDemo\Firebase4DelphiChatDemo.dproj"/>
+    </Target>
+    <Target Name="Firebase4DelphiChatDemo:Clean">
+        <MSBuild Projects="ChatDemo\Firebase4DelphiChatDemo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Firebase4DelphiChatDemo:Make">
+        <MSBuild Projects="ChatDemo\Firebase4DelphiChatDemo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="AuthDemo;Firebase4DelphiChatDemo"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="AuthDemo:Clean;Firebase4DelphiChatDemo:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="AuthDemo:Make;Firebase4DelphiChatDemo:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

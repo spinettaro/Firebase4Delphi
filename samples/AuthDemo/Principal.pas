@@ -3,7 +3,8 @@ unit Principal;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
 
 type
@@ -53,30 +54,26 @@ uses
 
 procedure TForm1.Button1Click(Sender: TObject);
 var
-  Auth: TFirebaseAuth;
+  Auth: IFirebaseAuth;
   AResponse: IFirebaseResponse;
   JSONResp: TJSONValue;
   Obj: TJSONObject;
 begin
   Auth := TFirebaseAuth.Create;
-  try
-    Auth.SetApiKey(edtKey.Text);
-    AResponse := Auth.SignInWithEmailAndPassword(edtEmail.Text, edtPassword.Text);
-    JSONResp := TJSONObject.ParseJSONValue(AResponse.ContentAsString);
-    if (not Assigned(JSONResp)) or (not(JSONResp is TJSONObject)) then
+  Auth.SetApiKey(edtKey.Text);
+  AResponse := Auth.SignInWithEmailAndPassword(edtEmail.Text, edtPassword.Text);
+  JSONResp := TJSONObject.ParseJSONValue(AResponse.ContentAsString);
+  if (not Assigned(JSONResp)) or (not(JSONResp is TJSONObject)) then
+  begin
+    if Assigned(JSONResp) then
     begin
-      if Assigned(JSONResp) then
-      begin
-        JSONResp.Free;
-      end;
-      Exit;
+      JSONResp.Free;
     end;
-    Obj := JSONResp as TJSONObject;
-    Obj.Values['idToken'].Value;
-    memoToken.Lines.Add(Obj.Values['idToken'].Value);
-  finally
-    Auth.Free;
+    Exit;
   end;
+  Obj := JSONResp as TJSONObject;
+  Obj.Values['idToken'].Value;
+  memoToken.Lines.Add(Obj.Values['idToken'].Value);
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
@@ -94,7 +91,7 @@ begin
   try
     AParams.Add('orderBy', '"$key"');
     AParams.Add('limitToLast', '2');
-    AResponse := ADatabase.Get([edtNode.Text+'.json'], AParams);
+    AResponse := ADatabase.Get([edtNode.Text + '.json'], AParams);
     JSONResp := TJSONObject.ParseJSONValue(AResponse.ContentAsString);
     if (not Assigned(JSONResp)) or (not(JSONResp is TJSONObject)) then
     begin
@@ -140,39 +137,39 @@ begin
   Writer.WritePropertyName('hora');
   Writer.WriteValue('11:03');
 
-    // Produtos
-    Writer.WritePropertyName('Produtos');
-    Writer.WriteStartArray;
+  // Produtos
+  Writer.WritePropertyName('Produtos');
+  Writer.WriteStartArray;
 
-      // Produto 01
-      Writer.WriteStartObject;
-      Writer.WritePropertyName('codigo');
-      Writer.WriteValue('A502C9DA');
-      Writer.WritePropertyName('descricao');
-      Writer.WriteValue('AGUA MINERAL');
-      Writer.WriteEndObject;
+  // Produto 01
+  Writer.WriteStartObject;
+  Writer.WritePropertyName('codigo');
+  Writer.WriteValue('A502C9DA');
+  Writer.WritePropertyName('descricao');
+  Writer.WriteValue('AGUA MINERAL');
+  Writer.WriteEndObject;
 
-      // Produto 02
-      Writer.WriteStartObject;
-      Writer.WritePropertyName('codigo');
-      Writer.WriteValue('A502C9DA');
-      Writer.WritePropertyName('descricao');
-      Writer.WriteValue('AGUA MINERAL');
-      Writer.WriteEndObject;
+  // Produto 02
+  Writer.WriteStartObject;
+  Writer.WritePropertyName('codigo');
+  Writer.WriteValue('A502C9DA');
+  Writer.WritePropertyName('descricao');
+  Writer.WriteValue('AGUA MINERAL');
+  Writer.WriteEndObject;
 
-    Writer.WriteEndArray;
+  Writer.WriteEndArray;
 
-    // Pagamentos
-    Writer.WritePropertyName('Pagamentos');
-    Writer.WriteStartArray;
+  // Pagamentos
+  Writer.WritePropertyName('Pagamentos');
+  Writer.WriteStartArray;
 
-      // Dinheiro
-      Writer.WriteStartObject;
-      Writer.WritePropertyName('dinheiro');
-      Writer.WriteValue('100.00');
-      Writer.WriteEndObject;
+  // Dinheiro
+  Writer.WriteStartObject;
+  Writer.WritePropertyName('dinheiro');
+  Writer.WriteValue('100.00');
+  Writer.WriteEndObject;
 
-    Writer.WriteEndArray;
+  Writer.WriteEndArray;
 
   // End
   Writer.WriteEndObject;
@@ -183,7 +180,7 @@ begin
   ADatabase.SetBaseURI(edtDomain.Text);
   ADatabase.SetToken(memoToken.Text);
   try
-    AResponse := ADatabase.Post([edtNode.Text+'.json'], JSONReq);
+    AResponse := ADatabase.Post([edtNode.Text + '.json'], JSONReq);
     JSONResp := TJSONObject.ParseJSONValue(AResponse.ContentAsString);
     if (not Assigned(JSONResp)) or (not(JSONResp is TJSONObject)) then
     begin
