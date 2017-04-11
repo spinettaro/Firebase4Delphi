@@ -1,0 +1,99 @@
+object RemoteConfigClientFrm: TRemoteConfigClientFrm
+  Left = 0
+  Top = 0
+  Caption = 'RemoteConfigClient'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnShow = FormShow
+  DesignerMasterStyle = 0
+  object GridPanelLayout1: TGridPanelLayout
+    Align = Client
+    Padding.Left = 10.000000000000000000
+    Padding.Top = 10.000000000000000000
+    Padding.Right = 10.000000000000000000
+    Padding.Bottom = 10.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 480.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    ColumnCollection = <
+      item
+        Value = 100.000000000000000000
+      end>
+    ControlCollection = <
+      item
+        Column = 0
+        Control = Label1
+        Row = 1
+      end
+      item
+        Column = 0
+        Control = Button1
+        Row = 3
+      end
+      item
+        Column = 0
+        Control = Edit1
+        Row = 5
+      end>
+    RowCollection = <
+      item
+        Value = 14.285714285714290000
+      end
+      item
+        Value = 14.285714285714290000
+      end
+      item
+        Value = 14.285714285714290000
+      end
+      item
+        Value = 14.285714285714290000
+      end
+      item
+        Value = 14.285714285714290000
+      end
+      item
+        Value = 14.285714285714290000
+      end
+      item
+        Value = 14.285714285714290000
+      end>
+    object Label1: TLabel
+      Align = Client
+      AutoSize = True
+      StyledSettings = [Family, Style, FontColor]
+      Size.Width = 620.000000000000000000
+      Size.Height = 48.571426391601560000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 20.000000000000000000
+      TextSettings.HorzAlign = Center
+      Text = 'Hello I'#39'm a simple text'
+    end
+    object Button1: TButton
+      Align = Client
+      Size.Width = 620.000000000000000000
+      Size.Height = 48.571426391601560000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      Text = 'I'#39'm simple button'
+    end
+    object Edit1: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      Align = Client
+      TabOrder = 2
+      Size.Width = 620.000000000000000000
+      Size.Height = 48.571411132812500000
+      Size.PlatformDefault = False
+      TextPrompt = 'I'#39'm edit, write on me'
+    end
+  end
+  object Timer1: TTimer
+    Interval = 5000
+    OnTimer = Timer1Timer
+    Left = 40
+    Top = 16
+  end
+end

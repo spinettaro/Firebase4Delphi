@@ -1,0 +1,28 @@
+object SplashForm: TSplashForm
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnShow = FormShow
+  DesignerMasterStyle = 0
+  object Text1: TText
+    Align = Client
+    AutoSize = True
+    Size.Width = 640.000000000000000000
+    Size.Height = 480.000000000000000000
+    Size.PlatformDefault = False
+    Text = ' I'#39'm a splash form '
+    TextSettings.Font.Size = 50.000000000000000000
+    TextSettings.Trimming = Word
+  end
+  object SplashTimer: TTimer
+    Enabled = False
+    OnTimer = SplashTimerTimer
+    Left = 40
+    Top = 32
+  end
+end
