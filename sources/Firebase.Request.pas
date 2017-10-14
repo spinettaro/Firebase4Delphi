@@ -136,8 +136,8 @@ begin
   begin
     if Result <> '?' then
       Result := Result + '&';
-    Result := Result + TNetEncoding.URL.URLDecode(Param.Key) + '=' +
-      TNetEncoding.URL.URLDecode(Param.Value)
+    Result := Result + TNetEncoding.URL.Encode(Param.Key) + '=' +
+      TNetEncoding.URL.Encode(Param.Value)
   end;
 end;
 
@@ -156,7 +156,7 @@ begin
   if Token.IsEmpty then
     Result := ''
   else
-    Result := '?auth=' + Token;
+    Result := '?auth=' + TNetEncoding.URL.Encode(Token);
 end;
 
 end.
